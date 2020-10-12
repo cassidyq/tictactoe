@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tic Tac Toe App</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="board">
+      <h1>Tic - Tac - Toe</h1>
+      <button class="tile" id="a0"></button>
+      <button class="tile" id="a1"></button>
+      <button class="tile" id="a2"></button>
+      <button class="tile" id="b0"></button>
+      <button class="tile" id="b1"></button>
+      <button class="tile" id="b2"></button>
+      <button class="tile" id="c0"></button>
+      <button class="tile" id="c1"></button>
+      <button class="tile" id="c2"></button>
+      <div id="messages">Waiting for opponent to join...</div>
+    </div>
+    <br />
+    <button class="replay">Play Again</button>
+    <h2>Scoreboard</h2>
+    <table>
+      <tr>
+        <th>X</th>
+        <th>Tie</th>
+        <th>O</th>
+      </tr>
+      <tr>
+        <td id="O">0</td>
+        <td id="Tie">0</td>
+        <td id="X">0</td>
+      </tr>
+    </table>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="script.js" ></script>
+  </body>
+</html>
