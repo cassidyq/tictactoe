@@ -1,15 +1,17 @@
 let socket = io();
-let symbol;
-let score = {"X": 0, "Tie": 0, "O": 0}
-let winner;
+
+let symbol: string;
+let score = {"X": 0, "Tie": 0, "O": 0};
+let winner: string;
+let myTurn: boolean;
 
 $(function () {
-  $(".board button").attr("disabled", true);
-  $(".replay").attr("disabled", true)
+  $(".board .tile").attr("disabled", "true");
+  $(".replay").attr("disabled", "true")
   $(".board> button").on("click", makeMove);
   $(".replay").on("click", replay);
   // Event is called when either player makes a move
-  socket.on("move.made", function (data) {
+  socket.on("move.made", function (data: { position: string; symbol: string | number | boolean | ((this: HTMLElement, index: number, text: string) => string | number | boolean); }) {
     // Render the move
     $("#" + data.position).text(data.symbol);
     // If the symbol is the same as the player's symbol,
@@ -23,8 +25,8 @@ $(function () {
         score.Tie = score.Tie + 1
         $("#Tie").text(score.Tie)
         $("#messages").text("Game Drawn!");
-        $(".board button").attr("disabled", true);
-        $(".replay").attr("disabled", false);
+        $(".board button").attr("disabled", "true");
+        $(".replay").removeAttr("disabled");
       } else {
         renderTurnMessage();
       }
@@ -41,13 +43,13 @@ $(function () {
       $("#X").text(score.X)
       $("#O").text(score.O)
       // Disable the board
-      $(".board button").attr("disabled", true);
-      $(".replay").attr("disabled", false);
+      $(".board button").attr("disabled", "true");
+      $(".replay").removeAttr("disabled");
     }
   });
 
   // Set up the initial state when the game begins
-  socket.on("game.begin", function (data) {
+  socket.on("game.begin", function (data: { symbol: string; }) {
     // assign X or O to the player
     symbol = data.symbol;
     // Give X the first turn
@@ -55,7 +57,7 @@ $(function () {
     renderTurnMessage();
   });
 
-  socket.on("game.replay", function(data) {
+  socket.on("game.replay", function(data: { winner: string; }) {
     // Give winner the first turn
     myTurn = symbol !== data.winner;
     
@@ -70,12 +72,12 @@ $(function () {
   // Disable the board if the opponent leaves
   socket.on("opponent.left", function () {
     $("#messages").text("Your opponent left the game.");
-    $(".board button").attr("disabled", true);
+    $(".board button").attr("disabled", "true");
   });
 });
 
 function getBoardState() {
-  var obj = {};
+  var obj : {[key: string] : string} = {};
 
   $(".board button").each(function () {
     obj[$(this).attr("id")] = $(this).text() || "";
@@ -83,17 +85,18 @@ function getBoardState() {
   return obj;
 }
 
+
 function gameTied() {
-  var state = getBoardState();
+  var state  = getBoardState();
 
   if (
     state.a0 !== "" &&
     state.a1 !== "" &&
     state.a2 !== "" &&
     state.b0 !== "" &&
+    state.b0 !== "" &&
     state.b1 !== "" &&
     state.b2 !== "" &&
-    state.b3 !== "" &&
     state.c0 !== "" &&
     state.c1 !== "" &&
     state.c2 !== ""
@@ -130,7 +133,7 @@ function renderTurnMessage() {
   // Disable the board if it is the opponents turn
   if (!myTurn) {
     $("#messages").text("Your opponent's turn");
-    $(".board button").attr("disabled", true);
+    $(".board button").attr("disabled", "true");
     // Enable the board if it is your turn
   } else {
     $("#messages").text("Your turn.");
@@ -138,7 +141,7 @@ function renderTurnMessage() {
   }
 }
 
-function makeMove(e) {
+function makeMove(e: { preventDefault: () => void; }) {
   e.preventDefault();
   // It's not your turn
   if (!myTurn) {
@@ -157,7 +160,7 @@ function makeMove(e) {
 }
 
 // get winner of the game and emit to server to reset board
-function replay (e) {
+function replay (e: { preventDefault: () => void; }) {
   e.preventDefault();
   myTurn ? (symbol === "X" ? winner = "X" : winner = "O") : (symbol === "O" ? winner = "X" : winner = "O");
   socket.emit("replay", {winner: winner});

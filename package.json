@@ -5,11 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
+    "build": "tsc public/script.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/jquery": "^3.5.3",
+    "@types/socket.io-client": "^1.4.34",
     "express": "^4.17.1",
     "nodemon": "^2.0.4",
     "socket.io": "^2.3.0"
