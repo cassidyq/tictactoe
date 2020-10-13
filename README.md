@@ -1,6 +1,6 @@
 # Tic-Tac-Toe
 
-A multiplayer tic-tac-toe app built using socket.io node.js and express
+A multiplayer tic-tac-toe app built using socket.io node.js express and typescript
 
 Usage
 ---
