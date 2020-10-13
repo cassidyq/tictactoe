@@ -1,7 +1,7 @@
 let socket = io();
 
 let symbol: string;
-let score = {"X": 0, "Tie": 0, "O": 0};
+let score = {"Total": 0, "X": 0, "Tie": 0, "O": 0};
 let winner: string;
 let myTurn: boolean;
 
@@ -23,7 +23,9 @@ $(function () {
     if (!isGameOver()) {
       if (gameTied()) {
         score.Tie = score.Tie + 1
+        score.Total = score.Total + 1
         $("#Tie").text(score.Tie)
+        $("#total").text(score.Total)
         $("#messages").text("Game Drawn!");
         $(".board button").attr("disabled", "true");
         $(".replay").removeAttr("disabled");
@@ -40,6 +42,8 @@ $(function () {
         $("#messages").text("Game over. You won!");
       }
       myTurn ? (symbol === "X" ? score.X++ : score.O++) : (symbol === "O" ? score.X++ : score.O++);
+      score.Total = score.Total + 1
+      $("#total").text(score.Total)
       $("#X").text(score.X)
       $("#O").text(score.O)
       // Disable the board
@@ -136,7 +140,7 @@ function renderTurnMessage() {
     $(".board button").attr("disabled", "true");
     // Enable the board if it is your turn
   } else {
-    $("#messages").text("Your turn.");
+    $("#messages").text(`Your turn ${symbol}.`);
     $(".board button").removeAttr("disabled");
   }
 }
