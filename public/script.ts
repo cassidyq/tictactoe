@@ -26,7 +26,7 @@ $(function () {
         score.Total = score.Total + 1
         $("#Tie").text(score.Tie)
         $("#total").text(score.Total)
-        $("#messages").text("Game Drawn!");
+        $("#messages").text("Game over, it was a tie!");
         $(".board button").attr("disabled", "true");
         $(".replay").removeAttr("disabled");
       } else {
