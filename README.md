@@ -2,6 +2,10 @@
 
 A multiplayer tic-tac-toe app built using socket.io node.js express and typescript
 
+node v10.16.1
+
+Project inspired by https://github.com/gauti123456/MultiplayerTicTacToeSocketio
+
 Usage
 ---
 ```
